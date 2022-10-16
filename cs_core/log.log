@@ -1,0 +1,82 @@
+2022-10-14 13:04:03 [INFO ] main StartupInfoLogger.java:55 com.cs.core.CoreApplication Starting CoreApplication on cs的华为MateBook with PID 11940 (C:\Users\13973\IdeaProjects\cs_economic\cs_core\target\classes started by 13973 in C:\Users\13973\IdeaProjects\cs_economic)
+2022-10-14 13:04:03 [INFO ] main SpringApplication.java:655 com.cs.core.CoreApplication The following profiles are active: dev
+2022-10-14 13:04:06 [INFO ] main StartupInfoLogger.java:61 com.cs.core.CoreApplication Started CoreApplication in 4.083 seconds (JVM running for 5.165)
+2022-10-14 13:09:43 [INFO ] main StartupInfoLogger.java:55 com.cs.core.CoreApplication Starting CoreApplication on cs的华为MateBook with PID 13300 (C:\Users\13973\IdeaProjects\cs_economic\cs_core\target\classes started by 13973 in C:\Users\13973\IdeaProjects\cs_economic)
+2022-10-14 13:09:43 [INFO ] main SpringApplication.java:655 com.cs.core.CoreApplication The following profiles are active: dev
+2022-10-14 13:09:47 [INFO ] main StartupInfoLogger.java:61 com.cs.core.CoreApplication Started CoreApplication in 4.336 seconds (JVM running for 5.166)
+2022-10-14 14:46:52 [INFO ] main StartupInfoLogger.java:55 com.cs.core.CoreApplication Starting CoreApplication on cs的华为MateBook with PID 14116 (C:\Users\13973\IdeaProjects\cs_economic\cs_core\target\classes started by 13973 in C:\Users\13973\IdeaProjects\cs_economic)
+2022-10-14 14:46:52 [INFO ] main SpringApplication.java:655 com.cs.core.CoreApplication The following profiles are active: dev
+2022-10-14 14:46:55 [INFO ] main StartupInfoLogger.java:61 com.cs.core.CoreApplication Started CoreApplication in 4.384 seconds (JVM running for 5.206)
+2022-10-14 14:48:10 [INFO ] main StartupInfoLogger.java:55 com.cs.core.CoreApplication Starting CoreApplication on cs的华为MateBook with PID 12112 (C:\Users\13973\IdeaProjects\cs_economic\cs_core\target\classes started by 13973 in C:\Users\13973\IdeaProjects\cs_economic)
+2022-10-14 14:48:10 [INFO ] main SpringApplication.java:655 com.cs.core.CoreApplication The following profiles are active: dev
+2022-10-14 14:48:14 [INFO ] main StartupInfoLogger.java:61 com.cs.core.CoreApplication Started CoreApplication in 5.003 seconds (JVM running for 5.745)
+2022-10-14 14:49:13 [INFO ] main StartupInfoLogger.java:55 com.cs.core.CoreApplication Starting CoreApplication on cs的华为MateBook with PID 16316 (C:\Users\13973\IdeaProjects\cs_economic\cs_core\target\classes started by 13973 in C:\Users\13973\IdeaProjects\cs_economic)
+2022-10-14 14:49:13 [INFO ] main SpringApplication.java:655 com.cs.core.CoreApplication The following profiles are active: dev
+2022-10-14 14:49:18 [INFO ] main StartupInfoLogger.java:61 com.cs.core.CoreApplication Started CoreApplication in 5.979 seconds (JVM running for 7.215)
+2022-10-14 19:32:06 [INFO ] main SpringApplication.java:655 com.cs.core.CoreApplication The following profiles are active: dev
+2022-10-14 19:32:14 [INFO ] main StartupInfoLogger.java:61 com.cs.core.CoreApplication Started CoreApplication in 11.677 seconds (JVM running for 13.371)
+2022-10-15 09:56:12 [INFO ] main SpringApplication.java:655 com.cs.core.CoreApplication The following profiles are active: dev
+2022-10-15 09:56:25 [INFO ] main StartupInfoLogger.java:61 com.cs.core.CoreApplication Started CoreApplication in 16.686 seconds (JVM running for 19.366)
+2022-10-15 10:21:13 [INFO ] main SpringApplication.java:655 com.cs.core.CoreApplication The following profiles are active: dev
+2022-10-15 10:21:21 [INFO ] main StartupInfoLogger.java:61 com.cs.core.CoreApplication Started CoreApplication in 10.753 seconds (JVM running for 11.612)
+2022-10-15 11:05:03 [INFO ] main SpringApplication.java:655 com.cs.core.CoreApplication The following profiles are active: dev
+2022-10-15 11:05:11 [INFO ] main StartupInfoLogger.java:61 com.cs.core.CoreApplication Started CoreApplication in 11.76 seconds (JVM running for 13.053)
+2022-10-15 11:06:01 [ERROR] http-nio-8000-exec-2 UnifiedExceptionHandle.java:58 com.cs.common.exception.UnifiedExceptionHandle Request method 'GET' not supported
+org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'GET' not supported
+	at org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.handleNoMatch(RequestMappingInfoHandlerMapping.java:213)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.lookupHandlerMethod(AbstractHandlerMethodMapping.java:422)
+	at org.springframework.web.servlet.handler.AbstractHandlerMethodMapping.getHandlerInternal(AbstractHandlerMethodMapping.java:367)
+	at org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.getHandlerInternal(RequestMappingInfoHandlerMapping.java:110)
+	at org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMapping.getHandlerInternal(RequestMappingInfoHandlerMapping.java:59)
+	at org.springframework.web.servlet.handler.AbstractHandlerMapping.getHandler(AbstractHandlerMapping.java:396)
+	at org.springframework.web.servlet.DispatcherServlet.getHandler(DispatcherServlet.java:1234)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1016)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:943)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:626)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:733)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:374)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:868)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1590)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+2022-10-15 11:07:33 [INFO ] main SpringApplication.java:655 com.cs.core.CoreApplication The following profiles are active: dev
+2022-10-15 11:07:41 [INFO ] main StartupInfoLogger.java:61 com.cs.core.CoreApplication Started CoreApplication in 11.023 seconds (JVM running for 12.339)
+2022-10-15 13:14:48 [INFO ] main SpringApplication.java:655 com.cs.core.CoreApplication The following profiles are active: dev
+2022-10-15 13:14:56 [INFO ] main StartupInfoLogger.java:61 com.cs.core.CoreApplication Started CoreApplication in 11.125 seconds (JVM running for 12.382)
+2022-10-15 13:30:53 [INFO ] main SpringApplication.java:655 com.cs.core.CoreApplication The following profiles are active: dev
+2022-10-15 13:31:00 [INFO ] main StartupInfoLogger.java:61 com.cs.core.CoreApplication Started CoreApplication in 10.155 seconds (JVM running for 10.854)
+2022-10-15 14:10:21 [INFO ] main SpringApplication.java:655 com.cs.core.CoreApplication The following profiles are active: dev
+2022-10-15 14:10:28 [INFO ] main StartupInfoLogger.java:61 com.cs.core.CoreApplication Started CoreApplication in 9.972 seconds (JVM running for 10.623)
+2022-10-15 14:52:05 [INFO ] main SpringApplication.java:655 com.cs.core.CoreApplication The following profiles are active: dev
+2022-10-15 14:53:30 [INFO ] main SpringApplication.java:655 com.cs.core.CoreApplication The following profiles are active: dev

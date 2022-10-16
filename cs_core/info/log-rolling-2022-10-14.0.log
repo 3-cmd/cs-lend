@@ -1,0 +1,5 @@
+2022-10-14 14:49:13 [INFO ] main StartupInfoLogger.java:55 com.cs.core.CoreApplication Starting CoreApplication on cs的华为MateBook with PID 16316 (C:\Users\13973\IdeaProjects\cs_economic\cs_core\target\classes started by 13973 in C:\Users\13973\IdeaProjects\cs_economic)
+2022-10-14 14:49:13 [INFO ] main SpringApplication.java:655 com.cs.core.CoreApplication The following profiles are active: dev
+2022-10-14 14:49:18 [INFO ] main StartupInfoLogger.java:61 com.cs.core.CoreApplication Started CoreApplication in 5.979 seconds (JVM running for 7.215)
+2022-10-14 19:32:06 [INFO ] main SpringApplication.java:655 com.cs.core.CoreApplication The following profiles are active: dev
+2022-10-14 19:32:14 [INFO ] main StartupInfoLogger.java:61 com.cs.core.CoreApplication Started CoreApplication in 11.677 seconds (JVM running for 13.371)
