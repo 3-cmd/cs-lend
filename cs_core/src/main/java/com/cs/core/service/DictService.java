@@ -1,9 +1,13 @@
 package com.cs.core.service;
 
+import com.cs.core.pojo.dto.ExcelDictDTO;
 import com.cs.core.pojo.entity.Dict;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.List;
 
 /**
  * <p>
@@ -19,4 +23,7 @@ public interface DictService extends IService<Dict> {
      * @param is 输入流
      */
     void importData(InputStream is);
+
+
+    List<ExcelDictDTO> getExcelDictDTOS();
 }

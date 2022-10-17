@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import java.time.LocalDateTime;
 
 import java.io.Serializable;
+import java.util.List;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -57,4 +58,7 @@ public class Dict implements Serializable {
     private Boolean deleted;
 
 
+    @ApiModelProperty(value = "嵌套子查询属性")
+    @TableField(exist=false)
+    private List<Dict> dictList;
 }
