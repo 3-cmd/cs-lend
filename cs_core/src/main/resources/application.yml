@@ -21,7 +21,3 @@ spring:
 mybatis-plus: #mybatis
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-jwt:
-  header: Authorization
-  tokenSecret: qazxswedcvfrtgbnhyujmkiolp #密钥
-  tokenExpired: 3600000 #token过期时间(30分钟)
