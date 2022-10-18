@@ -20,10 +20,13 @@ import java.util.List;
 public interface DictService extends IService<Dict> {
     /**
      * excel文件写入数据库,首先先读取文件,然后通过持久层方法进行数据的解析并写入数据到数据库,导入导出数据针对的是数据库
+     *
      * @param is 输入流
      */
     void importData(InputStream is);
 
 
     List<ExcelDictDTO> getExcelDictDTOS();
+
+    public List<Dict> listWithTree();
 }

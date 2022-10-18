@@ -6,6 +6,7 @@ import com.cs.common.exception.BusinessException;
 import com.cs.common.result.R;
 import com.cs.common.result.ResponseEnum;
 import com.cs.core.pojo.dto.ExcelDictDTO;
+import com.cs.core.pojo.entity.Dict;
 import com.cs.core.service.DictService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.util.List;
 
 /**
  * <p>
@@ -38,8 +40,6 @@ import java.net.URLEncoder;
 public class AdminDictController {
     @Autowired
     private DictService dictService;
-
-
     /**
      *
      * @param file 前端传入的参数名称必须与此名称相同
@@ -74,6 +74,14 @@ public class AdminDictController {
             throw new BusinessException(ResponseEnum.EXPORT_DATA_ERROR, e);
         }
 
+    }
+    //由于数据字典的变化不是很频繁，而且系统对数据字典的访问较频繁，所以我们有必要把数据字典的数据存入缓存
+    // ，减少数据库压力和提高访问速度。这里，我们使用Redis作为系统的分布式缓存中间件。
+    @ApiOperation("获取嵌套属性")
+    @GetMapping("getDictList")
+    public R getDictList(){
+        List<Dict> dictList = dictService.listWithTree();
+        return R.success(dictList);
     }
 }
 

@@ -60,5 +60,5 @@ public class Dict implements Serializable {
 
     @ApiModelProperty(value = "嵌套子查询属性")
     @TableField(exist=false)
-    private List<Dict> dictList;
+    private List<Dict> children;
 }
