@@ -9,9 +9,13 @@ spring:
         server-addr: 127.0.0.1:8848
     gateway:
       routes:
-        - id: service-core #core服务
+        - id: admin_service-core #admin_core服务
           uri: lb://service-core
           predicates:
             - Path=/admin/**
 #          filters:
 #            - RewritePath=/api/(?<segment>.*),/$\{segment} #请求路径将api前缀去掉
+        - id: api_service-core #api_core服务
+          uri: lb://service-core
+          predicates:
+            - Path=/api/**

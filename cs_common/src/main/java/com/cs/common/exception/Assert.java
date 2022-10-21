@@ -4,6 +4,10 @@ import com.cs.common.result.ResponseEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
+import java.util.regex.Pattern;
+
+import static org.springframework.core.io.buffer.DataBufferUtils.matcher;
+
 @Slf4j
 public abstract class Assert {
 
@@ -88,6 +92,20 @@ public abstract class Assert {
     public static void notEmpty(String s, ResponseEnum responseEnum) {
         if (StringUtils.isEmpty(s)) {
             log.info("is empty...............");
+            throw new BusinessException(responseEnum);
+        }
+    }
+
+    /**
+     * 断言  字符串否匹配正则
+     * 否则抛出异常
+     * @param regex
+     * @param value
+     * @param responseEnum
+     */
+    public static void isPattern(String regex,String value,ResponseEnum responseEnum) {
+        if (!Pattern.matches(regex,value)) {
+            log.info("not Pattern...............");
             throw new BusinessException(responseEnum);
         }
     }

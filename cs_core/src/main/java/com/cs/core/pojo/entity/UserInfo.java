@@ -26,6 +26,10 @@ public class UserInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    //0：锁定 1：正常
+    public static final Integer STATUS_NORMAL=1;
+    public static final Integer STATUS_LOCK=0;
+    public static final String USER_AVATAR="https://cs-lend.oss-cn-beijing.aliyuncs.com/4.jpg";
     @ApiModelProperty(value = "编号")
       @TableId(value = "id", type = IdType.AUTO)
     private Long id;

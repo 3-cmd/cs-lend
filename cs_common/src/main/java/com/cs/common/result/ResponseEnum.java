@@ -21,9 +21,11 @@ public enum ResponseEnum {
     BORROW_AMOUNT_NULL_ERROR(-201, "借款额度不能为空"),
     MOBILE_NULL_ERROR(-202, "手机号码不能为空"),
     MOBILE_ERROR(-203, "手机号码不正确"),
+    EMAIL_ERROR(-212, "邮箱不正确"),
     PASSWORD_NULL_ERROR(204, "密码不能为空"),
     CODE_NULL_ERROR(205, "验证码不能为空"),
     CODE_ERROR(206, "验证码错误"),
+    PASSWORD_NOT_PATTERN(207,"密码不符合指定规则"),
     MOBILE_EXIST_ERROR(207, "手机号已被注册"),
     LOGIN_MOBILE_ERROR(208, "用户不存在"),
     LOGIN_PASSWORD_ERROR(209, "密码错误"),
@@ -42,7 +44,7 @@ public enum ResponseEnum {
     PAY_UNIFIEDORDER_ERROR(401, "统一下单错误"),
 
     ALIYUN_SMS_LIMIT_CONTROL_ERROR(-502, "短信发送过于频繁"),//业务限流
-    ALIYUN_SMS_ERROR(-503, "短信发送失败"),//其他失败
+    ALIYUN_SMS_ERROR(-503, "邮件发送失败"),//其他失败
 
     WEIXIN_CALLBACK_PARAM_ERROR(-601, "回调参数不正确"),
     WEIXIN_FETCH_ACCESS_ERROR(-602, "获取access_token失败"),

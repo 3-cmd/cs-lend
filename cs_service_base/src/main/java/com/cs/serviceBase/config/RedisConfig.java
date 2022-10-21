@@ -19,6 +19,7 @@ public class RedisConfig {
     public RedisTemplate<String, Object> redisTemplate(LettuceConnectionFactory redisConnectionFactory) {
 
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+        //设计连接池工厂
         redisTemplate.setConnectionFactory(redisConnectionFactory);
 
         //首先解决key的序列化方式
@@ -33,7 +34,7 @@ public class RedisConfig {
         //objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL);
 
-        // 解决jackson2无法反序列化LocalDateTime的问题
+        // 解决jackson2无法反序列化LocalDateTime的问题,因为我们在存储时间时使用的是localDatetime类型
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         objectMapper.registerModule(new JavaTimeModule());
 
