@@ -77,5 +77,11 @@ public class UserInfoController {
             return R.error(ResponseEnum.LOGIN_AUTH_ERROR.getCode(),ResponseEnum.LOGIN_AUTH_ERROR.getMessage());
         }
     }
+    @ApiOperation("检查手机号是否存在")
+    @GetMapping("/checkMobile/{mobile}")
+    public R checkMobile(@PathVariable("mobile") String mobile) {
+        boolean result=userInfoService.checkMobile(mobile);
+        return R.success(result);
+    }
 }
 

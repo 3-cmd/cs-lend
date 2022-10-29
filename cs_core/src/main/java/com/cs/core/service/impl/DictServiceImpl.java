@@ -33,12 +33,13 @@ import java.util.stream.Collectors;
 @Slf4j
 public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements DictService {
 
-    private static final String REDIS_KEY="srb:core:dictList";
+    private static final String REDIS_KEY = "srb:core:dictList";
 
     @Autowired
     private DictMapper dictMapper;
     @Resource
-    private RedisTemplate<String,Object> redis;
+    private RedisTemplate<String, Object> redis;
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void importData(InputStream is) {
@@ -68,15 +69,18 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
     //本方法是将实体类中再添加一个该实体类型的集合,然后将每一条数据进行stream流遍历每次过滤出来一条实体的parent与所有数据的id相同的值进行设置到集合中
     @Override
     public List<Dict> listWithTree() {
+        /**
+         * 其中我们将关于redis的所有代码片段try catch包裹起来,如果redis出现问题,可以保证将我们的数据从数据库中查询出来然后返回到前端
+         */
 
         //1.查询出所有分类
         List<Dict> dictList = dictMapper.selectList(null);
         List<Dict> level1Menus = null;
         try {
             //先查询redis中是否存在数据列表
-            level1Menus = (List<Dict>)redis.opsForValue().get(REDIS_KEY);
+            level1Menus = (List<Dict>) redis.opsForValue().get(REDIS_KEY);
             //存在从redis中取出数据
-            if(level1Menus != null){
+            if (level1Menus != null) {
                 log.info("从redis中取值");
                 return level1Menus;
             }
@@ -95,7 +99,11 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         log.info("从数据库中取值");
         //将查询的数据存储到redis中
         log.info("数据存入redis");
-        redis.opsForValue().set(REDIS_KEY,level1Menus,5, TimeUnit.MINUTES);
+        try {
+            redis.opsForValue().set(REDIS_KEY, level1Menus, 5, TimeUnit.MINUTES);
+        }catch (Exception e) {
+            log.error("redis服务器异常：" + ExceptionUtils.getStackTrace(e));//此处不抛出异常，继续执行后面的代码
+        }
         return level1Menus;
     }
 

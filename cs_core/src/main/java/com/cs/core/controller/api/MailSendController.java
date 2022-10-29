@@ -21,12 +21,15 @@ import javax.annotation.Resource;
 public class MailSendController {
     @Resource
     private MailSendService mailSendService;
-    @GetMapping("send/{email}")
+    @GetMapping("send/{email}/{mobile}")
     @ApiOperation("邮箱验证码发送方法")
     public R send(@PathVariable("email")
                     @ApiParam("邮箱")
-                      String email){
-        mailSendService.send(email);
+                      String email,
+                  @ApiParam("手机号码")
+                  @PathVariable("mobile")
+                  String mobile){
+        mailSendService.send(email,mobile);
         return R.success("发送成功");
     }
 }
