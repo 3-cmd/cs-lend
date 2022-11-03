@@ -56,9 +56,16 @@ public class UserBindController {
     @ApiOperation("账户绑定成功后的回调函数")
     @PostMapping("/notify")
     public String notify(HttpServletRequest request){
-        //csb发起回调传回的参数
+        //csb发起回调传回的参数,其中会携带我么发送过去的签名,再次把签名sign传回来进行校验
         Map<String, Object> paraMap = RequestHelper.switchMap(request.getParameterMap());
         log.info("账户绑定数据发起回调传回的参数:{}",paraMap);
+        //进行签名的校验
+        if (!RequestHelper.isSignEquals(paraMap)) {
+            log.error("用户账号绑定异步回调签名错误{}",paraMap);
+            return "error";//返回非success的字符串即可
+        }
+        log.info("验签成功,开始账户绑定");
+        userBindService.notify(paraMap);
         return "success";
     }
 

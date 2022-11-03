@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -54,7 +55,7 @@ public class UserBindServiceImpl extends ServiceImpl<UserBindMapper, UserBind> i
          *也是合适的,并且再写入时应该判断是否已经进行了绑定,如此看来,业务逻辑是可以说的通的
          */
 
-        //如果我们发现了不同的UserId使用了相同的身份证,那我们应该制止这种情况,因为一个人只能申请一个找好并且一个人不能既是借款人又是贷款人这样对双方都存在风险,
+        //如果我们发现了不同的UserId使用了相同的身份证,那我们应该制止这种情况,因为一个人只能申请一个账号并且一个人不能既是借款人又是贷款人这样对双方都存在风险,
         //根据传递过来的idCard来查询数据库,如果查询到的数据中的userId与我前端传递过来的userId不同,那么抛出异常并且终止往下执行
         //但是如果是相同userId的那么我们只需要跟新新的信息即可
         LambdaQueryWrapper<UserBind> userBindWrapper = new LambdaQueryWrapper<>();
@@ -74,6 +75,8 @@ public class UserBindServiceImpl extends ServiceImpl<UserBindMapper, UserBind> i
             userBind = new UserBind();
             BeanUtils.copyProperties(userBindVO, userBind);
             userBind.setUserId(userId);
+            //为什么这里填写的是NO_BIND呢,因为绑定的完成还需要第三方服务的回调求情的成功,才能正真的算完成绑定
+            //当回调函数发送过来会携带参数,生成bind_code等等一系列数据,到时候才算正真的绑定成功
             userBind.setStatus(UserBindEnum.NO_BIND.getStatus());
             baseMapper.insert(userBind);
         } else {
@@ -134,5 +137,38 @@ public class UserBindServiceImpl extends ServiceImpl<UserBindMapper, UserBind> i
         //生成表单的工具类,需要传入表单发送请求的地址,还有要发送的数据,这里是要对接第三方平台,将我么你的数据传入进行存储到第三方数据库中
         String form = FormHelper.buildForm("http://localhost:9999/userBind/BindAgreeUserV2", paramMap);
         return form;
+    }
+
+    /**
+     * 账户绑定的最后一阶段,将数据进行补充数据库即可
+     * @param paraMap
+     */
+    @Override
+    public void notify(Map<String, Object> paraMap) {
+        //bindCode表示回调函数传递过来的绑定代码,我们要将这个传递回来的值进行数据库中的补充
+        String bindCode = (String) paraMap.get("bindCode");
+        //UserId
+        String UserId = (String) paraMap.get("agentUserId");
+
+
+        //根据第三方服务传递过来的UserId,查询出数据并且将bindCode进行写入
+        //更新user_bind表(用户绑定表)
+        LambdaQueryWrapper<UserBind> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(UserBind::getUserId,UserId);
+        UserBind userBind = baseMapper.selectOne(wrapper);
+        userBind.setBindCode(bindCode);
+        userBind.setStatus(UserBindEnum.BIND_OK.getStatus());
+        //根据user_id修改user_bind表,因为数据一对一,所以可以根据user_id修改
+        baseMapper.update(userBind,wrapper);
+
+
+
+        //更新user_info表
+        UserInfo userInfo = userInfoMapper.selectById(userBind);
+        userInfo.setBindCode(bindCode);
+        userInfo.setName(userBind.getName());
+        userInfo.setIdCard(userBind.getIdCard());
+        userInfo.setBindStatus(UserBindEnum.BIND_OK.getStatus());
+        userInfoMapper.updateById(userInfo);
     }
 }
