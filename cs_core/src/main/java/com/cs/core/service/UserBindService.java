@@ -2,6 +2,7 @@ package com.cs.core.service;
 
 import com.cs.core.pojo.entity.UserBind;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cs.core.pojo.vo.UserBindVO;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserBindService extends IService<UserBind> {
 
+    String commitBind(UserBindVO userBindVO, Long userId);
 }

@@ -1,6 +1,12 @@
 server:
   port: 8000 # 服务端口
-
+#openFeign的配置
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 10000 #连接超时配置
+        readTimeout: 600000 #执行超时配置
 spring:
   profiles:
     active: dev # 环境设置
