@@ -17,6 +17,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -143,8 +144,11 @@ public class UserBindServiceImpl extends ServiceImpl<UserBindMapper, UserBind> i
      * 账户绑定的最后一阶段,将数据进行补充数据库即可
      * @param paraMap
      */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void notify(Map<String, Object> paraMap) {
+
+
         //bindCode表示回调函数传递过来的绑定代码,我们要将这个传递回来的值进行数据库中的补充
         String bindCode = (String) paraMap.get("bindCode");
         //UserId
@@ -164,7 +168,7 @@ public class UserBindServiceImpl extends ServiceImpl<UserBindMapper, UserBind> i
 
 
         //更新user_info表
-        UserInfo userInfo = userInfoMapper.selectById(userBind);
+        UserInfo userInfo = userInfoMapper.selectById(UserId);
         userInfo.setBindCode(bindCode);
         userInfo.setName(userBind.getName());
         userInfo.setIdCard(userBind.getIdCard());
