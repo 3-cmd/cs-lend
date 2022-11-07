@@ -29,4 +29,6 @@ public interface DictService extends IService<Dict> {
     List<ExcelDictDTO> getExcelDictDTOS();
 
     public List<Dict> listWithTree();
+
+    List<Dict> getListByDictCode(String dictCode);
 }

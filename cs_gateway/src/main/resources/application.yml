@@ -19,3 +19,7 @@ spring:
           uri: lb://service-core
           predicates:
             - Path=/api/**
+        - id: cs_oss #oss服务
+          uri: lb://cs-oss
+          predicates:
+            - Path=/oss/**

@@ -1,6 +1,8 @@
 package com.cs.core.service.impl;
 
 import com.alibaba.excel.EasyExcel;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cs.core.listener.ExcelDictListener;
 import com.cs.core.pojo.dto.ExcelDictDTO;
 import com.cs.core.pojo.entity.Dict;
@@ -106,7 +108,6 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         }
         return level1Menus;
     }
-
     public List<Dict> getChildren(Dict root, List<Dict> all) {
         List<Dict> children = all.stream()
                 .filter(DictEntity -> DictEntity.getParentId().equals(root.getId()))
@@ -116,5 +117,14 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
                 }).collect(Collectors.toList());
         return children;
     }
+    @Override
+    public List<Dict> getListByDictCode(String dictCode) {
+        LambdaQueryWrapper<Dict> dictQueryWrapper = new LambdaQueryWrapper<>();
+        dictQueryWrapper.eq(Dict::getDictCode, dictCode);
+        Dict dict = baseMapper.selectOne(dictQueryWrapper);
+        return getChildren(dict,baseMapper.selectList(null));
+    }
+
+
 }
 

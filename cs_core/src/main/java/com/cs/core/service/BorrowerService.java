@@ -2,6 +2,7 @@ package com.cs.core.service;
 
 import com.cs.core.pojo.entity.Borrower;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cs.core.pojo.vo.BorrowerVO;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface BorrowerService extends IService<Borrower> {
 
+    void saveBorrowersByUserId(BorrowerVO borrowerVO, Long userId);
 }
