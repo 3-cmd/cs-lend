@@ -1,19 +1,19 @@
 package com.cs.core.controller.api;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.cs.common.exception.Assert;
 import com.cs.common.exception.BusinessException;
 import com.cs.common.result.R;
+import com.cs.common.result.ResponseEnum;
+import com.cs.core.pojo.entity.Borrower;
 import com.cs.core.pojo.vo.BorrowerVO;
 import com.cs.core.service.BorrowerService;
 import com.cs.serviceBase.utils.JwtUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -44,5 +44,13 @@ public class BorrowerController {
         borrowerService.saveBorrowersByUserId(borrowerVO,userId);
         return R.success("信息提交成功");
     }
+
+    @ApiOperation("获取登录用户的借贷状态")
+    @GetMapping("auth/getBorrowerStatus")
+    public R getBorrowerStatus(HttpServletRequest request){
+        Integer status = borrowerService.getBorrowerStatus(request);
+        return R.success(status);
+    }
+
 }
 

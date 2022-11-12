@@ -35,7 +35,7 @@ public class UserBindController {
 
     @Autowired
     private UserBindService userBindService;
-    @ApiOperation("账户半丁提交数据")
+    @ApiOperation("账户绑定提交数据")
     @PostMapping("/auth/bind")
     public R bind(@RequestBody UserBindVO userBindVO, HttpServletRequest request){
         //当我们登录时,前端会将我们生成的token进行存储,当我们登陆后,每次发送的请求都会携带一个token,会在请求头之中

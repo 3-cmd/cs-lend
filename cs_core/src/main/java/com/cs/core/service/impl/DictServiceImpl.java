@@ -125,6 +125,19 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         return getChildren(dict,baseMapper.selectList(null));
     }
 
+    @Override
+    public String getNameByParentDictCodeAndValue(String dictCode, Integer value) {
+        //根据dictCode查询出子类数据,然后根据value值查询出数据
+        LambdaQueryWrapper<Dict> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Dict::getDictCode,dictCode);
+        Dict dict = baseMapper.selectOne(wrapper);
+        List<Dict> children = getChildren(dict, baseMapper.selectList(null));
+        //根据dictCode与value值只能查出一条数据
+        List<Dict> collect = children.stream().filter(item -> item.getValue() .equals(value) ).collect(Collectors.toList());
+        Dict one = collect.get(0);
+        return one.getName();
+    }
+
 
 }
 

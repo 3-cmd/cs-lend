@@ -1,6 +1,6 @@
 spring:
   application:
-    name: cs_oss
+    name: cs-oss
   cloud:
     nacos:
       discovery:

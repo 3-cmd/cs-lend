@@ -31,4 +31,5 @@ public interface DictService extends IService<Dict> {
     public List<Dict> listWithTree();
 
     List<Dict> getListByDictCode(String dictCode);
+    String getNameByParentDictCodeAndValue(String dictCode,Integer value);
 }
