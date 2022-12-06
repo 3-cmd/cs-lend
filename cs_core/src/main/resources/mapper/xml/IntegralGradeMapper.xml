@@ -2,4 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cs.core.mapper.IntegralGradeMapper">
 
+    <select id="selectMaxIntegralAmount" resultType="integer">
+        select max(integral_end) from integral_grade;
+    </select>
 </mapper>
