@@ -1,7 +1,9 @@
 package com.cs.core.service;
 
+import com.cs.core.pojo.entity.BorrowInfo;
 import com.cs.core.pojo.entity.Lend;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cs.core.pojo.vo.BorrowInfoApprovalVO;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface LendService extends IService<Lend> {
 
+    void createLend(BorrowInfoApprovalVO borrowInfoApprovalVO, BorrowInfo borrowInfo);
 }

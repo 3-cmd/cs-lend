@@ -1,26 +1,42 @@
 package com.cs.core.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cs.common.exception.Assert;
 import com.cs.common.result.ResponseEnum;
 import com.cs.core.enums.BorrowAuthEnum;
 import com.cs.core.enums.BorrowInfoStatusEnum;
 import com.cs.core.enums.BorrowerStatusEnum;
 import com.cs.core.enums.UserBindEnum;
+import com.cs.core.mapper.BorrowerMapper;
 import com.cs.core.mapper.IntegralGradeMapper;
 import com.cs.core.mapper.UserInfoMapper;
 import com.cs.core.pojo.entity.BorrowInfo;
 import com.cs.core.mapper.BorrowInfoMapper;
+import com.cs.core.pojo.entity.Borrower;
 import com.cs.core.pojo.entity.IntegralGrade;
 import com.cs.core.pojo.entity.UserInfo;
+import com.cs.core.pojo.vo.BorrowInfoApprovalVO;
+import com.cs.core.pojo.vo.BorrowerDetailVO;
 import com.cs.core.service.BorrowInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cs.core.service.BorrowerService;
+import com.cs.core.service.DictService;
+import com.cs.core.service.LendService;
 import com.cs.serviceBase.utils.JwtUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -40,6 +56,15 @@ public class BorrowInfoServiceImpl extends ServiceImpl<BorrowInfoMapper, BorrowI
 
     @Resource
     private BorrowInfoMapper borrowInfoMapper;
+
+    @Resource
+    private DictService dictService;
+    @Resource
+    private BorrowerMapper borrowerMapper;
+    @Resource
+    private BorrowerService borrowerService;
+    @Resource
+    private LendService lendService;
 
     /**
      * 根据当前登录的用户进行借款额度的获取---> 首先user_info表中获取该用户积分,然后integral_grade表中获取对应的最大借款额度
@@ -103,5 +128,86 @@ public class BorrowInfoServiceImpl extends ServiceImpl<BorrowInfoMapper, BorrowI
         //如果没有查询出来,那么该用户没有提交借款申请
         if (borrowInfo==null) return BorrowInfoStatusEnum.NO_AUTH.getStatus();
         return borrowInfo.getStatus();
+    }
+
+    /**
+     * 分页获取借款信息的列表
+     * @param currentPage 当前页码
+     * @param limit 每页显示的条目数
+     * @param keyword 搜索到关键字
+     * @return 返回分页对象 ,其中records属性为分页的每条信息
+     */
+    @Override
+    public Page<BorrowInfo> getBorrowerInfoList(Long currentPage,Long limit,String keyword) {
+        Page<BorrowInfo> page=new Page<>();
+        page.setCurrent(currentPage);
+        page.setSize(limit);
+        LambdaQueryWrapper<BorrowInfo> wrapper=new LambdaQueryWrapper<>();
+        wrapper.like(!keyword.isEmpty(),BorrowInfo::getName,keyword)
+                .or()
+                .like(!keyword.isEmpty(),BorrowInfo::getMobile,keyword);
+        Page<BorrowInfo> myPage = this.page(page, wrapper);
+        List<BorrowInfo> borrowInfoList = myPage.getRecords();
+        List<BorrowInfo> borrowInfos = borrowInfoList.stream().map(item -> {
+            //查询borrower表中的数据,因为只有借款人才能在借款信息表中存在,所以只需要查询借款人表即可
+            BorrowInfo borrowInfo = new BorrowInfo();
+            BeanUtils.copyProperties(item, borrowInfo);
+            //获取每条信息的userid,然后进行封装
+            Long userId = item.getUserId();
+            LambdaQueryWrapper<Borrower> borrowerWrapper = new LambdaQueryWrapper<>();
+            borrowerWrapper.eq(Borrower::getUserId, userId);
+            Borrower borrower = borrowerMapper.selectOne(borrowerWrapper);
+            borrowInfo.setName(borrower.getName());
+            borrowInfo.setMobile(borrower.getMobile());
+            //查询前端需要的文字信息  资金用途以及还款方式还有贷款的状态
+            borrowInfo.getParam().put("moneyUse",dictService.getNameByParentDictCodeAndValue("moneyUse",item.getMoneyUse()));
+            borrowInfo.getParam().put("returnMethod",dictService.getNameByParentDictCodeAndValue("returnMethod",item.getReturnMethod()));
+            borrowInfo.getParam().put("status",BorrowInfoStatusEnum.getMsgByStatus(borrowInfo.getStatus()));
+            return borrowInfo;
+        }).collect(Collectors.toList());
+        myPage.setRecords(borrowInfos);
+        return myPage;
+    }
+
+    @Override
+    public Map<String, Object> getBorrowInfoDetails(Long id) {
+        //查询借款对象
+        BorrowInfo borrowInfo = baseMapper.selectById(id);
+        //组装数据
+        String returnMethod = dictService.getNameByParentDictCodeAndValue("returnMethod", borrowInfo.getReturnMethod());
+        String moneyUse = dictService.getNameByParentDictCodeAndValue("moneyUse", borrowInfo.getMoneyUse());
+        String status = BorrowInfoStatusEnum.getMsgByStatus(borrowInfo.getStatus());
+        borrowInfo.getParam().put("returnMethod", returnMethod);
+        borrowInfo.getParam().put("moneyUse", moneyUse);
+        borrowInfo.getParam().put("status", status);
+
+        //根据user_id获取借款人对象
+        LambdaQueryWrapper<Borrower> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Borrower::getUserId, borrowInfo.getUserId());
+        Borrower borrower = borrowerMapper.selectOne(wrapper);
+        //组装借款人对象
+        BorrowerDetailVO borrowerDetailVO = borrowerService.showDetails(borrower.getId());
+
+        //组装数据
+        Map<String, Object> result = new HashMap<>();
+        result.put("borrowInfo", borrowInfo);
+        result.put("borrower", borrowerDetailVO);
+        return result;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void approval(BorrowInfoApprovalVO borrowInfoApprovalVO) {
+        //1.审批主要是对借款信息的状态进行修改
+        Long borrowInfoId = borrowInfoApprovalVO.getId();
+        BorrowInfo borrowInfo=borrowInfoMapper.selectById(borrowInfoId);
+        borrowInfo.setStatus(borrowInfoApprovalVO.getStatus());
+        borrowInfoMapper.updateById(borrowInfo);
+        //2.审核通过产生新标的,在标的表中添加记录也就是 lend表中添加记录, 否则不添加记录
+        //如果审核不通过
+        if (!borrowInfoApprovalVO.getStatus().equals(BorrowInfoStatusEnum.CHECK_OK.getStatus())) return;
+        //在lend表中添加记录
+        borrowInfo=borrowInfoMapper.selectById(borrowInfoId);
+        lendService.createLend(borrowInfoApprovalVO,borrowInfo);
     }
 }
