@@ -14,9 +14,3 @@ spring:
         bucket: cs-lend
 server:
   port: 14000
-#aliyun:
-#  oss:
-#    endpoint: oss-cn-beijing.aliyuncs.com
-#    access-key: LTAI5tKnh5pChpfEPJ87ktR3
-#    secret-key: Iy5NL6L6ZzC7xwzwMQcgKbETkd11by
-#    bucket: cs-lend
