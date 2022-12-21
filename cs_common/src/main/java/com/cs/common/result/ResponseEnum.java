@@ -10,6 +10,7 @@ import lombok.ToString;
 public enum ResponseEnum {
     SUCCESS(0,"成功"),
     ERROR(-1,"服务器内部错误"),
+    USER_NOT_LOGIN(-1000,"用户未登录,请先登陆"),
     //-1xx 服务器错误
     BAD_SQL_GRAMMAR_ERROR(-101, "sql语法错误"),
     SERVLET_ERROR(-102, "servlet请求异常"), //-2xx 参数校验

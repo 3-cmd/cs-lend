@@ -1,29 +1,26 @@
 package com.cs.core.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cs.common.exception.Assert;
 import com.cs.common.result.ResponseEnum;
 import com.cs.core.csb.FormHelper;
 import com.cs.core.csb.HfbConst;
 import com.cs.core.csb.RequestHelper;
 import com.cs.core.enums.UserBindEnum;
+import com.cs.core.mapper.UserBindMapper;
 import com.cs.core.mapper.UserInfoMapper;
 import com.cs.core.pojo.entity.UserBind;
-import com.cs.core.mapper.UserBindMapper;
 import com.cs.core.pojo.entity.UserInfo;
 import com.cs.core.pojo.vo.UserBindVO;
 import com.cs.core.service.UserBindService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -174,5 +171,14 @@ public class UserBindServiceImpl extends ServiceImpl<UserBindMapper, UserBind> i
         userInfo.setIdCard(userBind.getIdCard());
         userInfo.setBindStatus(UserBindEnum.BIND_OK.getStatus());
         userInfoMapper.updateById(userInfo);
+    }
+
+    @Override
+    public String getBindCodeByUserId(Long userId) {
+        LambdaQueryWrapper<UserBind> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(UserBind::getUserId, userId);
+        UserBind userBind = baseMapper.selectOne(wrapper);
+        String bindCode = userBind.getBindCode();
+        return bindCode;
     }
 }

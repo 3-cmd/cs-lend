@@ -1,7 +1,10 @@
 package com.cs.core.service;
 
+import com.cs.core.pojo.bo.TransFlowBO;
 import com.cs.core.pojo.entity.TransFlow;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface TransFlowService extends IService<TransFlow> {
 
+    void saveTransFlow(TransFlowBO transFlowBO);
+    boolean isHaveTransFlow(String agentBillNo);
+
+    List<TransFlow> selectByUserId(Long userId);
 }

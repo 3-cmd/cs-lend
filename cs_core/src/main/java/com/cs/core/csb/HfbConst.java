@@ -27,7 +27,7 @@ public class HfbConst {
     //充值汇付宝平台url地址
     public static final String RECHARGE_URL = "http://localhost:9999/userAccount/AgreeBankCharge";
     //充值异步回调
-    public static final String RECHARGE_NOTIFY_URL = "http://localhost/api/core/userAccount/notify";
+    public static final String RECHARGE_NOTIFY_URL = "http://localhost:10000/api/core/userAccount/notify";
     //充值同步回调
     public static final String RECHARGE_RETURN_URL = "http://localhost:3000/user";
 
@@ -37,7 +37,7 @@ public class HfbConst {
     //充值汇付宝平台url地址
     public static final String INVEST_URL = "http://localhost:9999/userInvest/AgreeUserVoteProject";
     //充值异步回调
-    public static final String INVEST_NOTIFY_URL = "http://localhost/api/core/lendItem/notify";
+    public static final String INVEST_NOTIFY_URL = "http://localhost:10000/api/core/lendItem/notify";
     //充值同步回调
     public static final String INVEST_RETURN_URL = "http://localhost:3000/user";
 
@@ -52,7 +52,7 @@ public class HfbConst {
     //充值汇付宝平台url地址
     public static final String WITHDRAW_URL = "http://localhost:9999/userAccount/CashBankManager";
     //充值异步回调
-    public static final String WITHDRAW_NOTIFY_URL = "http://localhost/api/core/userAccount/notifyWithdraw";
+    public static final String WITHDRAW_NOTIFY_URL = "http://localhost:10000/api/core/userAccount/notifyWithdraw";
     //充值同步回调
     public static final String WITHDRAW_RETURN_URL = "http://localhost:3000/user";
 
@@ -62,7 +62,7 @@ public class HfbConst {
     //充值汇付宝平台url地址
     public static final String BORROW_RETURN_URL = "http://localhost:9999/lendReturn/AgreeUserRepayment";
     //充值异步回调
-    public static final String BORROW_RETURN_NOTIFY_URL = "http://localhost/api/core/lendReturn/notifyUrl";
+    public static final String BORROW_RETURN_NOTIFY_URL = "http://localhost:10000/api/core/lendReturn/notifyUrl";
     //充值同步回调
     public static final String BORROW_RETURN_RETURN_URL = "http://localhost:3000/user";
 

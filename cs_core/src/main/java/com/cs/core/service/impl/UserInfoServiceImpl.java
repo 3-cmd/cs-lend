@@ -1,23 +1,25 @@
 package com.cs.core.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cs.common.exception.Assert;
 import com.cs.common.result.ResponseEnum;
 import com.cs.common.utils.MD5;
 import com.cs.core.mapper.UserAccountMapper;
+import com.cs.core.mapper.UserInfoMapper;
 import com.cs.core.mapper.UserLoginRecordMapper;
 import com.cs.core.pojo.entity.UserAccount;
 import com.cs.core.pojo.entity.UserInfo;
-import com.cs.core.mapper.UserInfoMapper;
 import com.cs.core.pojo.entity.UserLoginRecord;
 import com.cs.core.pojo.query.UserInfoQuery;
 import com.cs.core.pojo.vo.LoginVO;
 import com.cs.core.pojo.vo.RegisterVO;
+import com.cs.core.pojo.vo.UserIndexVO;
 import com.cs.core.pojo.vo.UserInfoVO;
 import com.cs.core.service.UserInfoService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cs.serviceBase.utils.JwtUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -44,6 +46,8 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     private UserLoginRecordMapper recordMapper;
     @Autowired
     private UserInfoMapper userInfoMapper;
+    @Autowired
+    private UserLoginRecordMapper userLoginRecordMapper;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -158,6 +162,38 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         return userInfo==null;
 
 
+    }
+
+    @Override
+    public UserIndexVO getIndexUserInfo(Long userId) {
+
+        //用户信息
+        UserInfo userInfo = baseMapper.selectById(userId);
+        //账户信息
+        QueryWrapper<UserAccount> userAccountQueryWrapper = new QueryWrapper<>();
+        userAccountQueryWrapper.eq("user_id", userId);
+        UserAccount userAccount = userAccountMapper.selectOne(userAccountQueryWrapper);
+        //登录信息
+        QueryWrapper<UserLoginRecord> userLoginRecordQueryWrapper = new QueryWrapper<>();
+        userLoginRecordQueryWrapper
+                .eq("user_id", userId)
+                .orderByDesc("id")
+                .last("limit 1");
+        UserLoginRecord userLoginRecord = userLoginRecordMapper.selectOne(userLoginRecordQueryWrapper);
+        //result.put("userLoginRecord", userLoginRecord);
+        //组装结果数据
+        UserIndexVO userIndexVO = new UserIndexVO();
+        userIndexVO.setUserId(userInfo.getId());
+        userIndexVO.setUserType(userInfo.getUserType());
+        userIndexVO.setName(userInfo.getName());
+        userIndexVO.setNickName(userInfo.getNickName());
+        userIndexVO.setHeadImg(userInfo.getHeadImg());
+        userIndexVO.setBindStatus(userInfo.getBindStatus());
+        userIndexVO.setAmount(userAccount.getAmount());
+        userIndexVO.setFreezeAmount(userAccount.getFreezeAmount());
+        userIndexVO.setLastLoginTime(userLoginRecord.getCreateTime());
+
+        return userIndexVO;
     }
 
 }

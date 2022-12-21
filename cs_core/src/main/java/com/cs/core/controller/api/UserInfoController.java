@@ -4,9 +4,9 @@ package com.cs.core.controller.api;
 import com.cs.common.exception.Assert;
 import com.cs.common.result.R;
 import com.cs.common.result.ResponseEnum;
-import com.cs.core.pojo.entity.UserInfo;
 import com.cs.core.pojo.vo.LoginVO;
 import com.cs.core.pojo.vo.RegisterVO;
+import com.cs.core.pojo.vo.UserIndexVO;
 import com.cs.core.pojo.vo.UserInfoVO;
 import com.cs.core.service.UserInfoService;
 import com.cs.core.utils.MailUtil;
@@ -83,5 +83,14 @@ public class UserInfoController {
         boolean result=userInfoService.checkMobile(mobile);
         return R.success(result);
     }
+    @ApiOperation("获取个人空间用户信息")
+    @GetMapping("/auth/getIndexUserInfo")
+    public R getIndexUserInfo(HttpServletRequest request) {
+        String token = request.getHeader("token");
+        Long userId = JwtUtils.getUserId(token);
+        UserIndexVO userIndexVO = userInfoService.getIndexUserInfo(userId);
+        return R.success(userIndexVO);
+    }
+
 }
 

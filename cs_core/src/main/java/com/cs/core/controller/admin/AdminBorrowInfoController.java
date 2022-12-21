@@ -51,7 +51,8 @@ public class AdminBorrowInfoController {
     }
     @ApiOperation("审批借款信息")
     @PostMapping("/approval")
-    public R approval(@RequestBody BorrowInfoApprovalVO borrowInfoApprovalVO) {
+    public R approval(@ApiParam(value = "审批信息封装数据")
+                          @RequestBody BorrowInfoApprovalVO borrowInfoApprovalVO) {
         borrowInfoService.approval(borrowInfoApprovalVO);
         return R.success("审批完成");
     }
